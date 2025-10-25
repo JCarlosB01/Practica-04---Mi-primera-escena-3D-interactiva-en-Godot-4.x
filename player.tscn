@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://dra1i78vhsopd"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_iui31"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_63xk0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j45ym"]
+albedo_color = Color(0.988235, 0.768627, 0.403922, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_yekef"]
+lightmap_size_hint = Vector2i(17, 14)
+material = SubResource("StandardMaterial3D_j45ym")
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_iui31")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_63xk0")
+
+[node name="Visuals" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Visuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_yekef")
+skeleton = NodePath("../../CollisionShape3D")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+spring_length = 5.0
+
+[node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 0.999848, -0.0174524, 0, 0.0174524, 0.999848, -15, 0, 0)

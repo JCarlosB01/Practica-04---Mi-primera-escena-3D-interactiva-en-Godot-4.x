@@ -1,0 +1,68 @@
+[gd_scene load_steps=12 format=3 uid="uid://cdcmmct5e2sfr"]
+
+[ext_resource type="PackedScene" uid="uid://dra1i78vhsopd" path="res://player.tscn" id="1_d85vl"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_a1eai"]
+
+[sub_resource type="Sky" id="Sky_dns7p"]
+sky_material = SubResource("ProceduralSkyMaterial_a1eai")
+
+[sub_resource type="Environment" id="Environment_24bfx"]
+background_mode = 2
+sky = SubResource("Sky_dns7p")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_oxwa4"]
+size = Vector3(1, 2, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_un45x"]
+size = Vector3(1, 2, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jjctp"]
+size = Vector3(20, 2, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7hra2"]
+size = Vector3(20, 2, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0jqil"]
+size = Vector3(20, 1, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o1ind"]
+albedo_color = Color(0.341176, 0.329412, 0.329412, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ms3vs"]
+
+[node name="Main" type="Node3D"]
+
+[node name="Player" parent="." instance=ExtResource("1_d85vl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 4)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_24bfx")
+
+[node name="Floor_fisico" type="StaticBody3D" parent="."]
+
+[node name="Wall_W" type="CollisionShape3D" parent="Floor_fisico"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1, 0)
+shape = SubResource("BoxShape3D_oxwa4")
+
+[node name="Wall_E" type="CollisionShape3D" parent="Floor_fisico"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1, 0)
+shape = SubResource("BoxShape3D_un45x")
+
+[node name="Wall_S" type="CollisionShape3D" parent="Floor_fisico"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 10)
+shape = SubResource("BoxShape3D_jjctp")
+
+[node name="Wall_N" type="CollisionShape3D" parent="Floor_fisico"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -10)
+shape = SubResource("BoxShape3D_7hra2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor_fisico"]
+visible = false
+shape = SubResource("BoxShape3D_0jqil")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor_fisico"]
+transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_o1ind")
+mesh = SubResource("BoxMesh_ms3vs")
+skeleton = NodePath("")
